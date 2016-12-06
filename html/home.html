@@ -1,0 +1,36 @@
+<div class='align-center'>
+    <div class='dropdown'>
+        <button class='dropdown_btn' ng-click='buyArtifact(art1)'>Buy artifact #1</button>
+        <div class='dropdown_content'>
+            <div>Increase damage + {{art1.damage}} points</div>
+            <div>Increase agility + {{art1.agility}} points</div>
+            <div>Costs: {{art1.price}} coins</div>
+        </div>
+    </div>
+    <div class='dropdown'>
+        <button class='dropdown_btn' ng-click='buyArtifact(art2)'>Buy artifact #2</button>
+        <div class='dropdown_content'>
+            <div>Increase damage + {{art2.damage}} points</div>
+            <div>Costs: {{art2.price}} coins</div>
+        </div>
+    </div>
+</div>
+<div class='block align-center'>
+    <div class='padding-10'>Current hero: {{name}}</div>
+    <div class='padding-10'>Current damage: {{currentDamage}} points</div>
+    <div class='padding-10'>Current agility: {{currentAgility}} points</div>
+    <div class='padding-10'>Current strength: {{currentStrength}} points</div>
+    <div class='padding-10'>Current luck: {{currentLuck}} points</div>
+    <div class='padding-10'>Current money: <span class='underlined'>{{currentMoney}}</span> coins</div>
+    <div class='padding-10'>You've bought <span class='bloody'>{{amount}}</span> artefact(s).</div>
+</div>
+<div class='block align-center'><span class='bloody'>In your bag:</span>
+    <div ng-repeat="purchase in allPurchases">
+        <div ng-if='purchase.amount'>
+            <div>Name: {{purchase.id}} Damage: {{purchase.damage}} Agility: {{purchase.agility}} Price: {{purchase.price}} Amount: {{purchase.amount}} </div>
+            <div ng-if='sale' ng-click='sellArtifact(allPurchases, purchase)'><span class='bloody clickable'>Sell</span> {{purchase.id}}</div>
+        </div>
+    </div>
+    <div class='bloody clearfix' ng-show='money'>You do not have enough money for that.</div>
+    <div class='bloody clearfix' ng-show='emptyBag'>You've already sold all artifacts of that type.</div>
+</div>
