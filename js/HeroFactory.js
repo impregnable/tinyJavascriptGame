@@ -2,12 +2,12 @@ angular.module('GameFactories', [])
     .factory('Hero', () => {
 
         // constructor to all heroes
-        function Hero(name, damage, primaryAttribute, agility, strength, luck, money) {
+        function Hero(name, damage, primaryAttribute, agility, vitality, luck, money) {
             this.name	=	name;
             this.damage	=	damage;
             this.primaryAttribute	=	primaryAttribute;
             this.agility	= agility;
-            this.strength	=	strength;
+            this.vitality	=	vitality;
             this.luck	=	luck;
             this.money = money;
         }
@@ -18,7 +18,7 @@ angular.module('GameFactories', [])
                 if	(this.money >= artifact.price) {
                     this.damage += artifact.damage;
                     this.agility += artifact.agility;
-                    this.strength += artifact.strength;
+                    this.vitality += artifact.vitality;
                     this.luck += artifact.luck;
                     this.money -= artifact.price;
                 } else {
@@ -31,8 +31,8 @@ angular.module('GameFactories', [])
             getAgility : function() {
                 return this.agility;
             },
-            getStrength : function() {
-                return this.strength;
+            getVitality : function() {
+                return this.vitality;
             },
             getLuck : function() {
                 return this.luck;
@@ -48,9 +48,30 @@ angular.module('GameFactories', [])
                     onePurchase.amount -= 1;
                     this.damage -= onePurchase.damage;
                     this.agility -= onePurchase.agility;
-                    this.strength -= onePurchase.strength;
+                    this.vitality -= onePurchase.vitality;
                     this.luck -= onePurchase.luck;
                     this.money += onePurchase.price;
+                } else {
+                    throw new Error;
+                }
+            },
+            // face your doom
+            fight : function(rival) {
+                rival.vitality -= this.damage;
+                this.vitality -= rival.damage;
+                console.log(rival.vitality, `current rival's hp`);
+                console.log(rival.damage, `current rival's damage`);
+                console.log(this.damage, `your current damage`);
+                console.log(this.vitality, `your current hp`);
+                if (rival.vitality <= 0 && this.vitality > 0) {
+                    this.money += rival.money;
+                    console.log(`${this.name} wins!`);
+                } else if (rival.vitality > 0 && this.vitality > 0) {
+                    console.log(`Your rival is still alive. The fight continues...`);
+                } else if (rival.vitality > 0 && this.vitality <= 0) {
+                    console.log(`Your spirit like your life is broken.`)
+                } else if (rival.vitality <= 0 && this.vitality <= 0) {
+                    console.log(`Double kill! It's a draw.`);
                 } else {
                     throw new Error;
                 }
@@ -59,7 +80,7 @@ angular.module('GameFactories', [])
 
         // static method
         Hero.createFromObject = (obj) => {
-            return new Hero(obj.name, obj.damage, obj.primaryAttribute, obj.agility, obj.strength, obj.luck, obj.money);
+            return new Hero(obj.name, obj.damage, obj.primaryAttribute, obj.agility, obj.vitality, obj.luck, obj.money);
         };
 
         return Hero;

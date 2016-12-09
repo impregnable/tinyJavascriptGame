@@ -1,6 +1,6 @@
 var myGame = angular.module('GameController', []);
 
-myGame.controller('GameController', function($scope, AntiMage) {
+myGame.controller('GameController', function($scope, AntiMage, RandomObject) {
     // can't use 'fat arrow ES6's syntax' to define controller - it's not suitable here, interesting
     // it can be done in jsfiddle though
 
@@ -10,17 +10,26 @@ myGame.controller('GameController', function($scope, AntiMage) {
         damage	:	100,
         primaryAttribute	:	'agility',
         agility	:	50,
-        strength	:	40,
+        vitality	:	40,
         luck	:	30,
         money	:	100
     };
+
+    // random rival
+    $scope.rival = {
+        damage : 35,
+        vitality : 230,
+        money : 15
+    };
+
+    console.log(RandomObject);
 
     // random artifacts
     $scope.art1	=	{
         id	:	'artifact #1',
         damage	:	45,
         agility	:	25,
-        strength : 0,
+        vitality : 0,
         luck : 0,
         price	:	35
     };
@@ -28,7 +37,7 @@ myGame.controller('GameController', function($scope, AntiMage) {
         id	:	'artifact #2',
         damage : 95,
         agility	: 0,
-        strength : 0,
+        vitality : 0,
         luck : 0,
         price : 55
     };
@@ -110,14 +119,18 @@ myGame.controller('GameController', function($scope, AntiMage) {
         } catch (error) {
             console.log(error);
             $scope.emptyBag = true;
-            console.log("You've already sold all artefacts of that type.");
+            console.log("You've already sold all artifacts of that type.");
         }
     };
 
-    $scope.$watchGroup(['myFactory.getDamage()', 'myFactory.getAgility()', 'myFactory.getStrength()', 'myFactory.getLuck()', 'myFactory.getMoney()'], (newValue) => {
+    $scope.attack = (rival) => {
+        antimage.fight(rival);
+    };
+
+    $scope.$watchGroup(['myFactory.getDamage()', 'myFactory.getAgility()', 'myFactory.getVitality()', 'myFactory.getLuck()', 'myFactory.getMoney()'], (newValue) => {
         $scope.currentDamage = newValue[0];
         $scope.currentAgility = newValue[1];
-        $scope.currentStrength = newValue[2];
+        $scope.currentVitality = newValue[2];
         $scope.currentLuck = newValue[3];
         $scope.currentMoney = newValue[4];
     })
