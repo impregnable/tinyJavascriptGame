@@ -1,3 +1,6 @@
+// all right, I changed my SPb's residence two days ago, so I've been really busy and my performance was interrupted but now I have
+// some spare time, and I, well, wanna keep working and maybe transform the full code to ES6 (hope I can perform that)
+
 angular.module('GameFactories', [])
     .factory('Hero', () => {
 
@@ -57,8 +60,19 @@ angular.module('GameFactories', [])
             },
             // face your doom
             fight : function(rival) {
-                rival.vitality -= this.damage;
-                this.vitality -= rival.damage;
+                if (rival.luck > this.luck) {
+                    rival.vitality -= this.damage * 0.9;
+                    this.vitality -= rival.damage * 1.5;
+                    console.log(`no luck`);
+                } else if (rival.luck == this.luck) {
+                    rival.vitality -= this.damage;
+                    this.vitality -= rival.damage;
+                } else {
+                    rival.vitality -= this.damage * 1.5;
+                    this.vitality -= rival.damage * 0.9;
+                    console.log(`yes luck`);
+                }
+
                 console.log(rival.vitality, `current rival's hp`);
                 console.log(rival.damage, `current rival's damage`);
                 console.log(this.damage, `your current damage`);

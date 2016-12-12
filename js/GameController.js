@@ -19,10 +19,12 @@ myGame.controller('GameController', function($scope, AntiMage, RandomObject) {
     $scope.rival = {
         damage : 35,
         vitality : 230,
-        money : 15
+        money : 15,
+        luck: 70
     };
 
     console.log(RandomObject);
+    console.log($scope.rival);
 
     // random artifacts
     $scope.art1	=	{
@@ -45,7 +47,7 @@ myGame.controller('GameController', function($scope, AntiMage, RandomObject) {
     $scope.arts = [{id	:	'artifact #1', damage	:	45, agility	:	25, price	:	35}, {id	:	'artifact #2', damage	:	95, agility	:	0, price	:	55}];
 
     // create Hero's instance
-    var antimage = AntiMage.createFromObject(am);
+    var antimage = AntiMage.createFromObject(RandomObject);
 
     $scope.myFactory = antimage;
 
